@@ -10,10 +10,13 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
-import javax.persistence.Table;
 
+/**
+ * This class is having properties of recipe.
+ * @author smita
+ *
+ */
 @Entity(name = "recipe")
-@Table(name = "recipe")
 public class Recipe  implements Serializable{
 
 	/**
@@ -27,19 +30,19 @@ public class Recipe  implements Serializable{
 	private String imagePath;
 	private String name;
 	private String type;
-	private int quantity;
+	private int numberOfServings;
 	private LocalDateTime recipeDate = LocalDateTime.now();
 	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Ingredients> ingredients;
 
-	public int getQuantity() {
-		return quantity;
+	public int getNumberOfServings() {
+		return numberOfServings;
 	}
 
 
 
-	public void setQuantity(int quantity) {
-		this.quantity = quantity;
+	public void setNumberOfServings(int numberOfServings) {
+		this.numberOfServings = numberOfServings;
 	}
 
 
@@ -110,7 +113,6 @@ public class Recipe  implements Serializable{
 	public void setIngredients(List<Ingredients> ingredients) {
 		this.ingredients = ingredients;
 	}
-
 
 
 }

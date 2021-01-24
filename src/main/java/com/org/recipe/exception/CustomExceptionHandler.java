@@ -11,15 +11,14 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
  /**
   * This class handles exception of entire application on global level.
   * @author smita
   *
   */
-@EnableWebMvc
 @ControllerAdvice(basePackages = "com.org.recipe")
-public class CustomExceptionHandler  
+public class CustomExceptionHandler extends ResponseEntityExceptionHandler 
 {
     private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getSimpleName());
 
@@ -28,47 +27,63 @@ public class CustomExceptionHandler
      * This is custom exception method to handle invalid input.
      * @param ex
      * @param request
-     * @return
+     * @return ResponseEntity<ErrorResponse>
      */
  
-    @ExceptionHandler(InvalidInputException.class)
-    public final ResponseEntity<Object> handleInvalidInputException(InvalidInputException ex, WebRequest request) {
+    @ExceptionHandler(value = {InvalidInputException.class})
+    public final ResponseEntity<ErrorResponse> handleInvalidInputException(InvalidInputException ex, WebRequest request) {
         List<String> details = new ArrayList<>();
         details.add(ex.getLocalizedMessage());
         ErrorResponse error = new ErrorResponse("Invalid Input", details);
         logger.error("Invalid Input Exception: ",ex);
-        return new ResponseEntity(error, HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
     }
     
     /**
-     * This is custom exception method to handle invalid input.
+     * This method is to handle recipe not found exception.
      * @param ex
      * @param request
-     * @return
+     * @return ResponseEntity<ErrorResponse>
      */
  
-    @ExceptionHandler(RecipeNotFoundException.class)
-    public final ResponseEntity<Object> handleRecipeNotFoundException(InvalidInputException ex, WebRequest request) {
+    @ExceptionHandler(value = {RecipeNotFoundException.class})
+    public final ResponseEntity<ErrorResponse> handleRecipeNotFoundException(RecipeNotFoundException ex, WebRequest request) {
         List<String> details = new ArrayList<>();
         details.add(ex.getMessage());
         ErrorResponse error = new ErrorResponse("Could not find recipe", details);
         logger.error("Could not find recipe Exception: ",ex);
-        return new ResponseEntity(error, HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
+    }
+    
+    /**
+     * This is custom exception method to handle recipe already exists.
+     * @param ex
+     * @param request
+     * @return ResponseEntity<ErrorResponse>
+     */
+ 
+    @ExceptionHandler(value = {RecipeAlreadExistsException.class})
+    public final ResponseEntity<ErrorResponse> handleRecipeNotFoundException(RecipeAlreadExistsException ex, WebRequest request) {
+        List<String> details = new ArrayList<>();
+        details.add(ex.getMessage());
+        ErrorResponse error = new ErrorResponse("Could not find recipe", details);
+        logger.error("Could not find recipe Exception: ",ex);
+        return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
     }
     
     /**
      * This method is for handling all kind of exception.
      * @param ex
      * @param request
-     * @return
+     * @return ResponseEntity<ErrorResponse>
      */
-    @ExceptionHandler(Exception.class)
-    public final ResponseEntity<Object> handleAllExceptions(Exception ex, WebRequest request) {
+    @ExceptionHandler(value = {Exception.class})
+    public final ResponseEntity<ErrorResponse> handleAllExceptions(Exception ex, WebRequest request) {
         List<String> details = new ArrayList<>();
         details.add(ex.getLocalizedMessage());
         ErrorResponse error = new ErrorResponse("Server Error", details);
         logger.error("Exception: ",ex);
-        return new ResponseEntity(error, HttpStatus.INTERNAL_SERVER_ERROR);
+        return new ResponseEntity<>(error, HttpStatus.INTERNAL_SERVER_ERROR);
     }
  
   

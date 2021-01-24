@@ -1,6 +1,10 @@
 package com.org.recipe.exception;
 
-//@ResponseStatus(HttpStatus.BAD_REQUEST)
+/**
+ * This class is to handle invalid input exception.
+ * @author smita
+ *
+ */
 public class InvalidInputException extends RuntimeException {
 	
 	private static final long serialVersionUID = 1L;

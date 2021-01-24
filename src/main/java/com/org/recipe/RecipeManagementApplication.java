@@ -13,17 +13,25 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
  * @author smita
  *
  */
+
 @SpringBootApplication
 @EnableSwagger2
 public class RecipeManagementApplication {
 
+	/**
+	 * @param args
+	 */
 	public static void main(String[] args) {
 		SpringApplication.run(RecipeManagementApplication.class, args);
 	}
-	
+	/**
+	 * This is to map objects automatically from entity class to DTO class.
+	 *
+	 */
 	@Bean
 	public ModelMapper modelMapper() {
 		return new ModelMapper();
 	}
+
 
 }

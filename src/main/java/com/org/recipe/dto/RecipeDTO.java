@@ -4,26 +4,28 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.List;
 
+/**
+ * This class is having recipe properties.
+ * @author smita
+ *
+ */
 public class RecipeDTO  implements Serializable{
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	private int id;
 	private String description;
 	private String imagePath;
 	private String name;
 	private String type;
-	private int quantity;
+	private int numberOfServings;
 	private LocalDateTime recipeDate = LocalDateTime.now();
 	
-	public int getQuantity() {
-		return quantity;
+	public int getNumberOfServings() {
+		return numberOfServings;
 	}
 
-	public void setQuantity(int quantity) {
-		this.quantity = quantity;
+	public void setNumberOfServings(int numberOfServings) {
+		this.numberOfServings = numberOfServings;
 	}
 
 	public LocalDateTime getRecipeDate() {

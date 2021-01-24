@@ -1,15 +1,14 @@
 package com.org.recipe.controller;
+
 import java.lang.invoke.MethodHandles;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,146 +18,120 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.org.recipe.dto.IngredientsDTO;
 import com.org.recipe.dto.RecipeDTO;
-import com.org.recipe.model.Ingredients;
 import com.org.recipe.model.Recipe;
 import com.org.recipe.service.RecipeService;
+import com.org.recipe.util.RecipeUtil;
+
 /**
  * This class produces recipe rest services
+ * 
  * @author smita
  */
 
 @RestController
-@RequestMapping("/${super.root.path}")
-@CrossOrigin(origins = "*", allowedHeaders = "*")
+@RequestMapping("/")
 public class RecipeController {
 
 	@Autowired
 	RecipeService recipeService;
 
 	@Autowired
-	private ModelMapper modelMapper;
-	
-    private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getSimpleName());
+	private RecipeUtil recipeUtil;
+
+	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getSimpleName());
+
 	/**
-	 * This method is to get all the recipe object.
+	 * This method is to get all the recipes.
+	 * 
 	 * @return ResponseEntity<List<RecipeDTO>>
 	 * @param null
 	 */
-	@GetMapping("/${super.getAllRecipe.path}")
-	public ResponseEntity<List<RecipeDTO>> getAllrecipe() {
+
+	@GetMapping("/recipes")
+	public ResponseEntity<List<RecipeDTO>> getAllRecipes() {
 		logger.info("Inside getrecipe method ");
 		List<Recipe> recipes = recipeService.getAllRecipe();
-		List<RecipeDTO> recipesDto = recipes.stream()
-											.map(this::convertToDto)
-											.collect(Collectors.toList());
+		List<RecipeDTO> recipesDto = recipes.stream().map(recipeUtil::convertToDto).collect(Collectors.toList());
 		return new ResponseEntity<>(recipesDto, HttpStatus.OK);
 	}
 
 	/**
-	 *  This method is to get recipe as per id.
+	 * This method is to get recipe as per id.
+	 * 
 	 * @param recipeId
-	 * @return
+	 * @return RecipeDTO
 	 */
-	@GetMapping("/${super.getRecipe.path}")
+	@GetMapping("/recipes/{recipeId}")
 	public RecipeDTO getRecipe(@PathVariable("recipeId") int recipeId) {
 		logger.info("Inside getRecipe method ");
-		return convertToDto(recipeService.getRecipeById(recipeId));
+		return recipeUtil.convertToDto(recipeService.getRecipeById(recipeId));
 	}
 
 	/**
 	 * This method is to create a new recipe.
-	 * @param recipe
-	 * @return
-	 */
-	@PostMapping("/${super.saveRecipe.path}")
-	public ResponseEntity<Object> saveRecipe(@RequestBody RecipeDTO recipeDto) {
-		ResponseEntity<Object> response = null;
-		logger.info("Inside saverecipe method ");
-				
-				recipeService.saveOrUpdate(convertToEntity(recipeDto));
-				response = new ResponseEntity<>(recipeDto.getId(),HttpStatus.OK);
-			
-		return response;
-	}
-
-	/**
-	 * This method is to update a recipe.
-	 * @param recipe
+	 * 
+	 * @param recipeDto
 	 * @return ResponseEntity<Object>
 	 */
-	@PutMapping("/${super.updateRecipe.path}")
-	public ResponseEntity<RecipeDTO> updateRecipe(@RequestBody RecipeDTO recipeDto, @PathVariable("recipeId") int recipeId) {
-		ResponseEntity<RecipeDTO> response = null;
-		logger.info("Inside update method ");
-			recipeService.saveOrUpdate(convertToEntity(recipeDto));
-			response = new ResponseEntity<>(recipeDto,HttpStatus.OK);
+	@PostMapping("/recipes")
+	public ResponseEntity<Object> createRecipe(@RequestBody RecipeDTO recipeDto) {
+		ResponseEntity<Object> response = null;
+		logger.info("Inside saverecipe method ");
+
+		recipeService.save(recipeUtil.convertToEntity(recipeDto));
+		response = new ResponseEntity<>(recipeDto.getId(), HttpStatus.CREATED);
+
 		return response;
 	}
 
 	/**
-	 * This method is to delete recipe.
-	 * @param recipeId
-	 * @return void
+	 * This method is to update a recipe based on recipeId.
+	 * 
+	 * @param recipeDto,recipeId
+	 * @return ResponseEntity<RecipeDTO>
 	 */
-	@DeleteMapping("/${super.deleterecipe.path}")
-	public ResponseEntity<RecipeDTO> deleterecipe(@PathVariable("recipeId") int recipeId) {
+	@PutMapping("/recipes/{recipeId}")
+	public ResponseEntity<RecipeDTO> updateRecipe(@RequestBody RecipeDTO recipeDto,
+			@PathVariable("recipeId") int recipeId) {
 		ResponseEntity<RecipeDTO> response = null;
-		logger.info("Inside deleterecipe method ");
-		recipeService.delete(recipeId);
-		response = new ResponseEntity<>(HttpStatus.OK);
+		logger.info("Inside update method ");
+		recipeService.update(recipeUtil.convertToEntity(recipeDto),recipeId);
+		response = new ResponseEntity<>(recipeDto, HttpStatus.OK);
 		return response;
 	}
-	
-	
-	
-	
-	
-	private RecipeDTO convertToDto(Recipe recipe) {
-		RecipeDTO recipeDTO = new RecipeDTO();
 
-		if (null != recipe) {
-			recipeDTO = modelMapper.map(recipe, RecipeDTO.class);
-			
-			List<IngredientsDTO> ingredientsDTO = recipe.getIngredients().stream()
-					.map(this::convertToDto)
-					.collect(Collectors.toList());
-			
-			recipeDTO.setIngredientsDto(ingredientsDTO);
-		}
-		return recipeDTO;
+	/**
+	 * This method is to delete recipe based on id.
+	 * 
+	 * @param recipeId
+	 * @return ResponseEntity<RecipeDTO>
+	 */
+	@DeleteMapping("/recipes/{recipeId}")
+	public ResponseEntity<RecipeDTO> deleteRecipe(@PathVariable("recipeId") int recipeId) {
+		ResponseEntity<RecipeDTO> response = null;
+		logger.info("Inside deleteRecipe method ");
+		recipeService.delete(recipeId);
+		response = new ResponseEntity<>(HttpStatus.NO_CONTENT);
+		return response;
 	}
+	/**
+	 * This method is to find recipe based on type(veg,non-veg).
+	 * 
+	 * @param type
+	 * @return ResponseEntity<List<RecipeDTO>>
+	 */
 	
-	private Recipe convertToEntity(RecipeDTO recipeDto) {
-		Recipe recipe = new Recipe();
-		if (null != recipeDto) {
-			recipe = modelMapper.map(recipeDto, Recipe.class);
-		
-		List<Ingredients> ingredients = recipeDto.getIngredientsDto().stream()
-				.map(this::convertToEntity)
-				.collect(Collectors.toList());
-		
-		recipe.setIngredients(ingredients);
-	}
-		return recipe;
-	}
-	
-	private IngredientsDTO convertToDto(Ingredients ingredients) {
-		IngredientsDTO ingredientsDTO = new IngredientsDTO();
+	@GetMapping("/recipesByType/{type}")
+	public ResponseEntity<List<RecipeDTO>> getAllRecipesByType(@PathVariable("type") String recipeType) {
+		logger.info("Inside getAllRecipesByType method ");
+		List<Recipe> recipes = recipeService.getRecipesByType(recipeType);
+		List<RecipeDTO> recipesDto = recipes.stream().map(recipeUtil::convertToDto).collect(Collectors.toList());
+		return new ResponseEntity<>(recipesDto, HttpStatus.OK);
 
-		if (null != ingredients) {
-			ingredientsDTO = modelMapper.map(ingredients, IngredientsDTO.class);
-		}
-		return ingredientsDTO;
 	}
-	
-	private Ingredients convertToEntity(IngredientsDTO ingredientsDto) {
-		Ingredients ingredients = new Ingredients();
-		if (null != ingredientsDto) {
-			ingredients = modelMapper.map(ingredientsDto, Ingredients.class);
-		}
-
-		return ingredients;
-	}
+	 
 }
+	
+
+

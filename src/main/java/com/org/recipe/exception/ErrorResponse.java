@@ -2,6 +2,11 @@ package com.org.recipe.exception;
 
 import java.util.List;
 
+/**
+ * This class is for handling error response.
+ * @author smita
+ *
+ */
 public class ErrorResponse {
 	public ErrorResponse(String message, List<String> details) {
         super();

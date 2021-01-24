@@ -3,15 +3,16 @@ package com.org.recipe.dto;
 import java.io.Serializable;
 
 
+/**
+ * This class is having all the ingredients used in creating a recipe.
+ * @author smita
+ *
+ */
 public class IngredientsDTO implements Serializable{
 	
-
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	private int id;
-	private int amount;
+	private String quantity;
 	private String name;
 	 
 	
@@ -21,11 +22,11 @@ public class IngredientsDTO implements Serializable{
 	public void setId(int id) {
 		this.id = id;
 	}
-	public int getAmount() {
-		return amount;
+	public String getQuantity() {
+		return quantity;
 	}
-	public void setAmount(int amount) {
-		this.amount = amount;
+	public void setQuantity(String quantity) {
+		this.quantity = quantity;
 	}
 	public String getName() {
 		return name;
@@ -36,10 +37,10 @@ public class IngredientsDTO implements Serializable{
 	public IngredientsDTO() {
 		
 	}
-	public IngredientsDTO(int id, int amount, String name) {
+	public IngredientsDTO(int id, String quantity, String name) {
 		super();
 		this.id = id;
-		this.amount = amount;
+		this.quantity = quantity;
 		this.name = name;
 	}
 	

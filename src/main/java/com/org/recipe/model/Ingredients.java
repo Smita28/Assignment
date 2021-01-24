@@ -5,10 +5,13 @@ import java.io.Serializable;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.Table;
 
+/**
+ * This class is having ingridient property which is to create a recipe.
+ * @author smita
+ *
+ */
 @Entity(name = "Ingredients")
-@Table(name = "Ingredients")
 public class Ingredients implements Serializable{
 	
 
@@ -19,7 +22,7 @@ public class Ingredients implements Serializable{
 	@Id
 	@GeneratedValue
 	private int id;
-	private int amount;
+	private String quantity;
 	private String name;
 	
 	public int getId() {
@@ -28,11 +31,11 @@ public class Ingredients implements Serializable{
 	public void setId(int id) {
 		this.id = id;
 	}
-	public int getAmount() {
-		return amount;
+	public String getQuantity() {
+		return quantity;
 	}
-	public void setAmount(int amount) {
-		this.amount = amount;
+	public void setQuantity(String quantity) {
+		this.quantity = quantity;
 	}
 	public String getName() {
 		return name;
@@ -41,11 +44,11 @@ public class Ingredients implements Serializable{
 		this.name = name;
 	}
 	public Ingredients() {}
-	public Ingredients(int id, int amount, String name) 
+	public Ingredients(int id, String quantity, String name) 
 	{
 		super();
 		this.id = id;
-		this.amount = amount;
+		this.quantity = quantity;
 		this.name = name;
 		
 	}
