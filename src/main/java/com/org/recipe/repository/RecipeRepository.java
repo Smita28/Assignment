@@ -18,7 +18,7 @@ public interface RecipeRepository extends CrudRepository<Recipe, Integer>{
 	/**
 	 * This method to find recipe by name.
 	 * @param name
-	 * @return
+	 * @return Recipe
 	 */
 	Recipe findByName(String name);
 	

@@ -49,7 +49,7 @@ public interface RecipeService {
 	 * 
 	 * @param recipe,id
 	 */
-	public void update(Recipe recipe, int recipeId);
+	public Recipe update(Recipe recipe, int recipeId);
 
 	/**
 	 * This method is to find recipe by type

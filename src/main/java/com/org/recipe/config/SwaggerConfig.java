@@ -13,7 +13,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 /**
  * This class is for Swagger.
  * 
- * @author smita21
+ * @author smita
  *
  */
 @Configuration
@@ -25,7 +25,7 @@ public class SwaggerConfig {
 	/**
 	 * This method is for swagger config
 	 * 
-	 * @return
+	 * @return Docket
 	 */
 	@Bean
 	public Docket productApi() {
@@ -34,8 +34,8 @@ public class SwaggerConfig {
 	}
 
 	/**
-	 * 
-	 * @return
+	 * This method is for web configuration.
+	 * @return WebMvcConfigurer
 	 */
 	@Bean
 	public WebMvcConfigurer webMvcConfigurer() {

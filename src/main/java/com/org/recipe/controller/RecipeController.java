@@ -45,7 +45,7 @@ public class RecipeController {
 	 * This method is to get all the recipes.
 	 * 
 	 * @return ResponseEntity<List<RecipeDTO>>
-	 * @param null
+	 * @param 
 	 */
 
 	@GetMapping("/recipes")
@@ -63,10 +63,10 @@ public class RecipeController {
 	 * @return RecipeDTO
 	 */
 	@GetMapping("/recipes/{recipeId}")
-	public RecipeDTO getRecipe(@PathVariable("recipeId") int recipeId) {
+	public ResponseEntity<RecipeDTO> getRecipe(@PathVariable("recipeId") int recipeId) {
 		logger.info("Inside getRecipe method ");
-		return recipeUtil.convertToDto(recipeService.getRecipeById(recipeId));
-	}
+		return new ResponseEntity<>(recipeUtil.convertToDto(recipeService.getRecipeById(recipeId)),HttpStatus.OK);
+	} 
 
 	/**
 	 * This method is to create a new recipe.
@@ -77,13 +77,9 @@ public class RecipeController {
 	@PostMapping("/recipes")
 	public ResponseEntity<RecipeDTO> createRecipe(@RequestBody RecipeDTO recipeDto) {
 		ResponseEntity<RecipeDTO> response = null;
-		RecipeDTO recipeDTO = null;
 		logger.info("Inside saverecipe method ");
-
 		Recipe recipe = recipeService.save(recipeUtil.convertToEntity(recipeDto));
-		
 		response = new ResponseEntity<>(recipeUtil.convertToDto(recipe), HttpStatus.CREATED);
-
 		return response;
 	}
 
@@ -98,15 +94,15 @@ public class RecipeController {
 			@PathVariable("recipeId") int recipeId) {
 		ResponseEntity<RecipeDTO> response = null;
 		logger.info("Inside update method ");
-		recipeService.update(recipeUtil.convertToEntity(recipeDto),recipeId);
-		response = new ResponseEntity<>(recipeDto, HttpStatus.OK);
+		Recipe recipe = recipeService.update(recipeUtil.convertToEntity(recipeDto),recipeId);
+		response = new ResponseEntity<>(recipeUtil.convertToDto(recipe), HttpStatus.OK);
 		return response;
 	}
 
 	/**
 	 * This method is to delete recipe based on id.
 	 * 
-	 * @param recipeId
+	 * @param int recipeId
 	 * @return ResponseEntity<RecipeDTO>
 	 */
 	@DeleteMapping("/recipes/{recipeId}")
@@ -120,7 +116,7 @@ public class RecipeController {
 	/**
 	 * This method is to find recipe based on type(veg,non-veg).
 	 * 
-	 * @param type
+	 * @param String recipeType
 	 * @return ResponseEntity<List<RecipeDTO>>
 	 */
 	

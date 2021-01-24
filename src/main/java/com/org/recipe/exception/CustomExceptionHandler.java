@@ -25,8 +25,8 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler
     
     /**
      * This is custom exception method to handle invalid input.
-     * @param ex
-     * @param request
+     * @param InvalidInputException
+     * @param WebRequest
      * @return ResponseEntity<ErrorResponse>
      */
  
@@ -41,8 +41,8 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler
     
     /**
      * This method is to handle recipe not found exception.
-     * @param ex
-     * @param request
+     * @param RecipeNotFoundException
+     * @param WebRequest
      * @return ResponseEntity<ErrorResponse>
      */
  
@@ -57,8 +57,8 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler
     
     /**
      * This is custom exception method to handle recipe already exists.
-     * @param ex
-     * @param request
+     * @param RecipeAlreadExistsException
+     * @param WebRequest
      * @return ResponseEntity<ErrorResponse>
      */
  
@@ -73,8 +73,8 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler
     
     /**
      * This method is for handling all kind of exception.
-     * @param ex
-     * @param request
+     * @param Exception
+     * @param WebRequest
      * @return ResponseEntity<ErrorResponse>
      */
     @ExceptionHandler(value = {Exception.class})
