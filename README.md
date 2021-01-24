@@ -8,9 +8,9 @@
 
 1.What you'll need
 
-   JDK 1.11 
-   Maven 4.0.0
-   spring-boot 2.4.0
+  --JDK 1.11     
+  --Maven 4.0.0     
+  --spring-boot 2.4.0      
 
 2.Here is the API Documentation of the application - http://localhost:8090/swagger-ui.html#!/
 
