@@ -32,7 +32,6 @@ public class RecipeUtilTest {
 		recipe = Mockito.mock(Recipe.class);
 		ingredients=Mockito.mock(Ingredients.class);
 
-
 	}
 	
 	@Test
