@@ -75,12 +75,14 @@ public class RecipeController {
 	 * @return ResponseEntity<Object>
 	 */
 	@PostMapping("/recipes")
-	public ResponseEntity<Object> createRecipe(@RequestBody RecipeDTO recipeDto) {
-		ResponseEntity<Object> response = null;
+	public ResponseEntity<RecipeDTO> createRecipe(@RequestBody RecipeDTO recipeDto) {
+		ResponseEntity<RecipeDTO> response = null;
+		RecipeDTO recipeDTO = null;
 		logger.info("Inside saverecipe method ");
 
-		recipeService.save(recipeUtil.convertToEntity(recipeDto));
-		response = new ResponseEntity<>(recipeDto.getId(), HttpStatus.CREATED);
+		Recipe recipe = recipeService.save(recipeUtil.convertToEntity(recipeDto));
+		
+		response = new ResponseEntity<>(recipeUtil.convertToDto(recipe), HttpStatus.CREATED);
 
 		return response;
 	}

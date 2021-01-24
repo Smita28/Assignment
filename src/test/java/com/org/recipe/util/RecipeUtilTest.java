@@ -2,6 +2,7 @@ package com.org.recipe.util;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -42,7 +43,7 @@ public class RecipeUtilTest {
 		recipe.setName("kiwi pinnaple ice cream");
 		recipe.setType("veg");
 		recipe.setNumberOfServings(2);
-		recipe.setRecipeDate(LocalDateTime.now());
+		recipe.setRecipeDate(new Timestamp(System.currentTimeMillis()));
 		List<Ingredients> ingredientsList = new ArrayList<>();
 		ingredients.setId(2);
 		ingredients.setName("2 onions");

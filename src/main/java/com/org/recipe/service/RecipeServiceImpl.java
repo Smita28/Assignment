@@ -48,11 +48,15 @@ public class RecipeServiceImpl implements RecipeService {
 		return recipeRepository.save(recipe);
 	}
 
+	
 	/**
-	 *this method is to delete recipe by id.
+	 *
 	 */
 	@Override
 	public void delete(int id) {
+		if(!recipeRepository.findById(id).isPresent()) {
+			throw new RecipeNotFoundException(id);
+		}
 		recipeRepository.deleteById(id);
 	}
 
@@ -66,9 +70,9 @@ public class RecipeServiceImpl implements RecipeService {
 		if(!recipeRepository.findById(recipeId).isPresent()) {
 			throw new RecipeNotFoundException(recipeId);
 		}
-		if(null != recipeRepository.findByName(recipeName.strip())) {
+		/*if(null != recipeRepository.findByName(recipeName.strip())) {
 			throw new RecipeAlreadExistsException(recipeName);
-		}
+		}*/
 		recipeRepository.save(recipe);
 	}
 

@@ -63,7 +63,7 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler
      */
  
     @ExceptionHandler(value = {RecipeAlreadExistsException.class})
-    public final ResponseEntity<ErrorResponse> handleRecipeNotFoundException(RecipeAlreadExistsException ex, WebRequest request) {
+    public final ResponseEntity<ErrorResponse> handleRecipeAlreadExistsException(RecipeAlreadExistsException ex, WebRequest request) {
         List<String> details = new ArrayList<>();
         details.add(ex.getMessage());
         ErrorResponse error = new ErrorResponse("Could not find recipe", details);

@@ -1,7 +1,10 @@
 package com.org.recipe.model;
 
 import java.io.Serializable;
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -31,7 +34,7 @@ public class Recipe  implements Serializable{
 	private String name;
 	private String type;
 	private int numberOfServings;
-	private LocalDateTime recipeDate = LocalDateTime.now();
+	private Timestamp recipeDate;
 	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Ingredients> ingredients;
 
@@ -47,13 +50,13 @@ public class Recipe  implements Serializable{
 
 
 
-	public LocalDateTime getRecipeDate() {
+	public Timestamp getRecipeDate() {
 		return recipeDate;
 	}
 
 
 
-	public void setRecipeDate(LocalDateTime recipeDate) {
+	public void setRecipeDate(Timestamp recipeDate) {
 		this.recipeDate = recipeDate;
 	}
 

@@ -1,8 +1,9 @@
 package com.org.recipe.dto;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
 import java.util.List;
+
+import com.sun.istack.NotNull;
 
 /**
  * This class is having recipe properties.
@@ -13,12 +14,15 @@ public class RecipeDTO  implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 	private int id;
+	@NotNull
 	private String description;
 	private String imagePath;
+	@NotNull
 	private String name;
+	@NotNull
 	private String type;
 	private int numberOfServings;
-	private LocalDateTime recipeDate = LocalDateTime.now();
+	private  String recipeDate;
 	
 	public int getNumberOfServings() {
 		return numberOfServings;
@@ -28,11 +32,11 @@ public class RecipeDTO  implements Serializable{
 		this.numberOfServings = numberOfServings;
 	}
 
-	public LocalDateTime getRecipeDate() {
+	public String getRecipeDate() {
 		return recipeDate;
 	}
 
-	public void setRecipeDate(LocalDateTime recipeDate) {
+	public void setRecipeDate(String recipeDate) {
 		this.recipeDate = recipeDate;
 	}
 
