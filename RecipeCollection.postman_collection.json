@@ -1,0 +1,663 @@
+{
+	"info": {
+		"_postman_id": "80dbef44-f93d-46f7-9751-34532bdbe5d1",
+		"name": "RecipeCollection",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Create Recipes Success",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "password",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "admin",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\t\t\t\"description\": \"Chinese Chicken with sweet and sour sauce\",\r\n\t\t\t\"imagePath\": \"https://s-media-cache-ak0.pinimg.com/originals/63/6d/8d/636d8d6cfbf1862e5ad5f89571c55430.jpg\",\r\n\t\t\t\"name\": \"Palak Paneer\",\r\n\t\t\t\"type\": \"veg\",\r\n\t\t\t\"numberOfServings\": 3,\r\n\t\t\t\"ingredientsDto\": [\r\n\t\t\t\t{\r\n\t\t\t\t\t\"quantity\": \"6 cubes\",\r\n\t\t\t\t\t\"name\": \"Paneer\"\r\n\t\t\t\t},\r\n\t\t\t\t{\r\n\t\t\t\t\t\"quantity\": \"250gm\",\r\n\t\t\t\t\t\"name\": \"spinach leave\"\r\n\t\t\t\t},\r\n\t\t\t\t{\r\n\t\t\t\t\t\"quantity\": \"1 cup\",\r\n\t\t\t\t\t\"name\": \"sliced onion\"\r\n\t\t\t\t}\r\n\t\t\t]\r\n\t\t\t\r\n\t\t}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8090/recipes",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8090",
+					"path": [
+						"recipes"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get All Recipes Success",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "password",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "admin",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8090/recipes",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8090",
+					"path": [
+						"recipes"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Recipe By ID Success",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "password",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "admin",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8090/recipes/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8090",
+					"path": [
+						"recipes",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Recipe By ID Success",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "password",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "admin",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\t\t\t\"description\": \"Changed Name\",\r\n\t\t\t\"imagePath\": \"https://s-media-cache-ak0.pinimg.com/originals/63/6d/8d/636d8d6cfbf1862e5ad5f89571c55430.jpg\",\r\n\t\t\t\"name\": \"Palak Paneer\",\r\n\t\t\t\"type\": \"veg\",\r\n\t\t\t\"numberOfServings\": 3,\r\n\t\t\t\"ingredientsDto\": [\r\n\t\t\t\t{\r\n\t\t\t\t\t\"quantity\": \"6 cubes\",\r\n\t\t\t\t\t\"name\": \"Paneer\"\r\n\t\t\t\t},\r\n\t\t\t\t{\r\n\t\t\t\t\t\"quantity\": \"250gm\",\r\n\t\t\t\t\t\"name\": \"spinach leave\"\r\n\t\t\t\t},\r\n\t\t\t\t{\r\n\t\t\t\t\t\"quantity\": \"1 cup\",\r\n\t\t\t\t\t\"name\": \"sliced onion\"\r\n\t\t\t\t}\r\n\t\t\t]\r\n\t\t\t\r\n\t\t}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8090/recipes/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8090",
+					"path": [
+						"recipes",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Recipe By Type Veg Success",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "password",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "admin",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8090/recipesByType/veg",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8090",
+					"path": [
+						"recipesByType",
+						"veg"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Recipe By Type non-veg FAIL(Recipe Not Found)",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "password",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "admin",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8090/recipesByType/non-veg",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8090",
+					"path": [
+						"recipesByType",
+						"non-veg"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create anoher Recipes Success",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "password",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "admin",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\t\t\t\"description\": \"stir fried vegetables wraped with a thin piece of bread\",\r\n\t\t\t\"imagePath\": \"https://s-media-cache-ak0.pinimg.com/originals/63/6d/8d/636d8d6cfbf1862e5ad5f89571c55430.jpg\",\r\n\t\t\t\"name\": \"Spring Roll\",\r\n\t\t\t\"type\": \"veg\",\r\n\t\t\t\"numberOfServings\": 1,\r\n\t\t\t\"ingredientsDto\": [\r\n\t\t\t\t{\r\n\t\t\t\t\t\"quantity\": \"1cup sliced\",\r\n\t\t\t\t\t\"name\": \"caroot\"\r\n\t\t\t\t},\r\n\t\t\t\t{\r\n\t\t\t\t\t\"quantity\": \"1 cup sliced\",\r\n\t\t\t\t\t\"name\": \"cabbage\"\r\n\t\t\t\t},\r\n\t\t\t\t{\r\n\t\t\t\t\t\"quantity\": \"1 cup\",\r\n\t\t\t\t\t\"name\": \"sliced onion\"\r\n\t\t\t\t}\r\n\t\t\t]\r\n\t\t\t\r\n\t\t}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8090/recipes",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8090",
+					"path": [
+						"recipes"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create anoher Recipes Success(Non-veg)",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "password",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "admin",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\t\t\"description\": \"Lightly toasted wraps with fresh eggs\",\r\n\t\t\"imagePath\": \"http://cdn.skim.gs/images/v1/msi/ivenjnophdgmridughl3/dinner-recipes-under-300-calories\",\r\n\t\t\"name\": \"Egg delight\",\r\n\t\t\"type\": \"non-veg\",\r\n\t\t\"numberOfServings\": 1,\r\n\t\t\"ingredientsDto\": [\r\n\t\t\t{\r\n\t\t\t\t\"quantity\": 6,\r\n\t\t\t\t\"name\": \"Eggs\"\r\n\t\t\t},\r\n\t\t\t{\r\n\t\t\t\t\"quantity\": 2,\r\n\t\t\t\t\"name\": \"Wraps\"\r\n\t\t\t},\r\n\t\t\t{\r\n\t\t\t\t\"quantity\": 1,\r\n\t\t\t\t\"name\": \"Cheese\"\r\n\t\t\t}\r\n\t\t]\r\n\t\t\r\n\t}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8090/recipes",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8090",
+					"path": [
+						"recipes"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create anoher Recipe FAIL(Recipe already Exist)",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "password",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "admin",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\t\t\"description\": \"Lightly toasted wraps with fresh eggs\",\r\n\t\t\"imagePath\": \"http://cdn.skim.gs/images/v1/msi/ivenjnophdgmridughl3/dinner-recipes-under-300-calories\",\r\n\t\t\"name\": \"Egg delight\",\r\n\t\t\"type\": \"non-veg\",\r\n\t\t\"numberOfServings\": 1,\r\n\t\t\"ingredientsDto\": [\r\n\t\t\t{\r\n\t\t\t\t\"quantity\": 6,\r\n\t\t\t\t\"name\": \"Eggs\"\r\n\t\t\t},\r\n\t\t\t{\r\n\t\t\t\t\"quantity\": 2,\r\n\t\t\t\t\"name\": \"Wraps\"\r\n\t\t\t},\r\n\t\t\t{\r\n\t\t\t\t\"quantity\": 1,\r\n\t\t\t\t\"name\": \"Cheese\"\r\n\t\t\t}\r\n\t\t]\r\n\t\t\r\n\t}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8090/recipes",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8090",
+					"path": [
+						"recipes"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Recipe By Type non-veg Success",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "password",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "admin",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8090/recipesByType/non-veg",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8090",
+					"path": [
+						"recipesByType",
+						"non-veg"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Recipe By ID FAIL",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "password",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "admin",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8090/recipes/1000",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8090",
+					"path": [
+						"recipes",
+						"1000"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Recipe By ID FAIL",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "password",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "admin",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\t\t\t\"description\": \"Changed Name\",\r\n\t\t\t\"imagePath\": \"https://s-media-cache-ak0.pinimg.com/originals/63/6d/8d/636d8d6cfbf1862e5ad5f89571c55430.jpg\",\r\n\t\t\t\"name\": \"Palak Paneer\",\r\n\t\t\t\"type\": \"veg\",\r\n\t\t\t\"numberOfServings\": 3,\r\n\t\t\t\"ingredientsDto\": [\r\n\t\t\t\t{\r\n\t\t\t\t\t\"quantity\": \"6 cubes\",\r\n\t\t\t\t\t\"name\": \"Paneer\"\r\n\t\t\t\t},\r\n\t\t\t\t{\r\n\t\t\t\t\t\"quantity\": \"250gm\",\r\n\t\t\t\t\t\"name\": \"spinach leave\"\r\n\t\t\t\t},\r\n\t\t\t\t{\r\n\t\t\t\t\t\"quantity\": \"1 cup\",\r\n\t\t\t\t\t\"name\": \"sliced onion\"\r\n\t\t\t\t}\r\n\t\t\t]\r\n\t\t\t\r\n\t\t}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8090/recipes/1000",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8090",
+					"path": [
+						"recipes",
+						"1000"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Recipe By Type non-veg FAIL(Only veg/non-veg accepted)",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "password",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "admin",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8090/recipesByType/non-veg1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8090",
+					"path": [
+						"recipesByType",
+						"non-veg1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Recipes FAIL(Mandatory Field Check)",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "password",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "admin",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\t\t\t\"description\": \"\",\r\n\t\t\t\"imagePath\": \"https://s-media-cache-ak0.pinimg.com/originals/63/6d/8d/636d8d6cfbf1862e5ad5f89571c55430.jpg\",\r\n\t\t\t\"name\": \"\",\r\n\t\t\t\"type\": \"veg\",\r\n\t\t\t\"numberOfServings\": 3,\r\n\t\t\t\"ingredientsDto\": [\r\n\t\t\t\t{\r\n\t\t\t\t\t\"quantity\": \"6 cubes\",\r\n\t\t\t\t\t\"name\": \"Paneer\"\r\n\t\t\t\t},\r\n\t\t\t\t{\r\n\t\t\t\t\t\"quantity\": \"250gm\",\r\n\t\t\t\t\t\"name\": \"spinach leave\"\r\n\t\t\t\t},\r\n\t\t\t\t{\r\n\t\t\t\t\t\"quantity\": \"1 cup\",\r\n\t\t\t\t\t\"name\": \"sliced onion\"\r\n\t\t\t\t}\r\n\t\t\t]\r\n\t\t\t\r\n\t\t}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8090/recipes",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8090",
+					"path": [
+						"recipes"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Recipe FAIL",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "password",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "admin",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8090/delete/1000",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8090",
+					"path": [
+						"delete",
+						"1000"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Recipe Success",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "password",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "admin",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8090/recipes/8",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8090",
+					"path": [
+						"recipes",
+						"8"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}

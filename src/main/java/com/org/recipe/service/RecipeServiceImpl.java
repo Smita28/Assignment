@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.org.recipe.exception.InvalidInputException;
-import com.org.recipe.exception.RecipeAlreadExistsException;
+import com.org.recipe.exception.RecipeAlreadyExistsException;
 import com.org.recipe.exception.RecipeNotFoundException;
 import com.org.recipe.model.Recipe;
 import com.org.recipe.repository.RecipeRepository;
@@ -52,8 +52,11 @@ public class RecipeServiceImpl implements RecipeService {
 	public Recipe save(Recipe recipe) {
 		
 		String recipeName = recipe.getName();
+		if(recipe.getDescription().isEmpty() || recipe.getName().isEmpty()|| recipe.getType().isEmpty()) {
+			throw new InvalidInputException("Recipe Description, Name and type should not be empty .");
+		}
 		if(null != recipeRepository.findByName(recipeName.strip())) {
-			throw new RecipeAlreadExistsException(recipeName);
+			throw new RecipeAlreadyExistsException(recipeName);
 		}
 		return recipeRepository.save(recipe);
 	}

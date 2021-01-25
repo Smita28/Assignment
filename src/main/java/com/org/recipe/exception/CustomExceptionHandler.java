@@ -57,16 +57,16 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler
     
     /**
      * This is custom exception method to handle recipe already exists.
-     * @param RecipeAlreadExistsException
+     * @param RecipeAlreadyExistsException
      * @param WebRequest
      * @return ResponseEntity<ErrorResponse>
      */
  
-    @ExceptionHandler(value = {RecipeAlreadExistsException.class})
-    public final ResponseEntity<ErrorResponse> handleRecipeAlreadExistsException(RecipeAlreadExistsException ex, WebRequest request) {
+    @ExceptionHandler(value = {RecipeAlreadyExistsException.class})
+    public final ResponseEntity<ErrorResponse> handleRecipeAlreadExistsException(RecipeAlreadyExistsException ex, WebRequest request) {
         List<String> details = new ArrayList<>();
         details.add(ex.getMessage());
-        ErrorResponse error = new ErrorResponse("Could not find recipe", details);
+        ErrorResponse error = new ErrorResponse("Recipe Already Exist", details);
         logger.error("Could not find recipe Exception: ",ex);
         return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
     }

@@ -5,17 +5,17 @@ package com.org.recipe.exception;
  * @author smita
  *
  */
-public class RecipeAlreadExistsException extends RuntimeException {
+public class RecipeAlreadyExistsException extends RuntimeException {
 
 	  /**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	public RecipeAlreadExistsException() {
+	public RecipeAlreadyExistsException() {
 		super();
 	  }
 
-	public RecipeAlreadExistsException(String name) {
+	public RecipeAlreadyExistsException(String name) {
 	    super("Recipe " + name +" already exists.");
 	  }
 }
