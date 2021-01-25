@@ -12,7 +12,10 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.security.test.context.support.WithMockUser;
+import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import com.org.recipe.model.Ingredients;
@@ -25,6 +28,7 @@ import com.org.recipe.repository.RecipeRepository;
  *
  */
 @ExtendWith(SpringExtension.class)
+@WithMockUser(username = "admin", password = "password", roles = "USER")
 class RecipeServiceImplTest {
 
 	@MockBean
@@ -40,15 +44,6 @@ class RecipeServiceImplTest {
 	void setUp() {
 		recipe = Mockito.mock(Recipe.class);
 		ingredients = Mockito.mock(Ingredients.class);
-		//recipeRepository = Mockito.mock(RecipeRepository.class);
-
-		/*
-		 * recipeService = Mockito.mock(RecipeService.class); recipeDto =
-		 * Mockito.mock(RecipeDTO.class); ingredientsDTO =
-		 * Mockito.mock(IngredientsDTO.class); recipeUtil =
-		 * Mockito.mock(RecipeUtil.class);
-		 */
-
 	}
 	
 	/**
@@ -72,6 +67,30 @@ class RecipeServiceImplTest {
 		
 		Recipe recipe = recipeServiceImpl.getRecipeById(id);
 		assertEquals(recipe, recipe);
+	}
+	
+	/**
+	 * This method will get recipes by type(veg,non-veg)
+	 */
+	@Test
+	void testGetRecipesByType() {
+		String recipeType = "veg";
+		List<Recipe> recipes = buildRecipes();
+		when(recipeRepository.findAllByType(recipeType)).thenReturn(recipes);
+		recipeServiceImpl.getRecipesByType(recipeType);
+        assertEquals(recipes, recipes);		
+	}
+	/**
+	 * This method is the fail scenario for get recipe by type.
+	 * If passing different string other than veg or non-veg it will throw exception
+	 */
+	@Test
+	void testGetAllRecipesByTypeFail() {
+		String recipeType = "veg222e";
+		List<Recipe> recipies=new ArrayList<Recipe>();
+		//when(recipeRepository.findAllByType(recipeType)).thenReturn(recipes);
+		recipeServiceImpl.getRecipesByType(recipeType);
+
 	}
 	/**
 	 * This method builds stub for recipe list

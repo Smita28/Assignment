@@ -50,7 +50,7 @@ public class RecipeController {
 
 	@GetMapping("/recipes")
 	public ResponseEntity<List<RecipeDTO>> getAllRecipes() {
-		logger.info("Inside getrecipe method ");
+		logger.info("Inside getAllrecipe method ");
 		List<Recipe> recipes = recipeService.getAllRecipe();
 		List<RecipeDTO> recipesDto = recipes.stream().map(recipeUtil::convertToDto).collect(Collectors.toList());
 		return new ResponseEntity<>(recipesDto, HttpStatus.OK);

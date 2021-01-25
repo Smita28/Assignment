@@ -3,7 +3,6 @@ package com.org.recipe.util;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.sql.Timestamp;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,6 +33,9 @@ public class RecipeUtilTest {
 
 	}
 	
+	/**
+	 * 
+	 */
 	@Test
 	void convertToDtoTest() {
 		recipe.setDescription("fruit icecream");
@@ -69,5 +71,6 @@ public class RecipeUtilTest {
 		Gson gson = new Gson();
 		return gson.fromJson(json, classOf);
 	}
+	
 
 }

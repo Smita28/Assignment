@@ -1,7 +1,5 @@
 package com.org.recipe.controller;
 
-
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
@@ -36,161 +34,164 @@ import com.org.recipe.util.RecipeUtilTest;
 @ExtendWith(SpringExtension.class)
 @WebMvcTest(RecipeController.class)
 @WithMockUser(username = "admin", password = "password", roles = "USER")
-class RecipeControllerTest{
+class RecipeControllerTest {
 
-	  @Autowired
-	    private MockMvc mockMvc;
-	  
-	  @MockBean
-	  RecipeService recipeService;
+	@Autowired
+	private MockMvc mockMvc;
 
-	  @MockBean
-	  RecipeUtil recipeUtil;
+	@MockBean
+	RecipeService recipeService;
+
+	@MockBean
+	RecipeUtil recipeUtil;
 	
-	
-    private final String URL = "/recipes/";
+	@MockBean
+	RecipeDTO recipeDTO;
 
-    @Test
-     void testCreateRecipe() throws Exception {
+	private final String URL = "/recipes/";
 
-        // prepare data and mock's behaviour
-    	RecipeDTO recipeDTO  = buildRecipeDTO();
-		Recipe recipe  = buildRecipe();
-        when(recipeService.save(any(Recipe.class))).thenReturn(recipe);
+	@Test
+	void testCreateRecipe() throws Exception {
+
+		// prepare data and mock's behaviour
+		RecipeDTO recipeDTO = buildRecipeDTO();
+		Recipe recipe = buildRecipe();
+		when(recipeService.save(any(Recipe.class))).thenReturn(recipe);
 		when(recipeUtil.convertToEntity(any(RecipeDTO.class))).thenReturn(recipe);
 		when(recipeUtil.convertToDto(any(Recipe.class))).thenReturn(recipeDTO);
 
-        // execute
-        MvcResult result = mockMvc.perform(MockMvcRequestBuilders.post(URL).contentType(MediaType.APPLICATION_JSON)
-                .accept(MediaType.APPLICATION_JSON).content(RecipeUtilTest.objectToJson(recipeDTO)))
+		// execute
+		MvcResult result = mockMvc
+				.perform(MockMvcRequestBuilders.post(URL).contentType(MediaType.APPLICATION_JSON)
+						.accept(MediaType.APPLICATION_JSON).content(RecipeUtilTest.objectToJson(recipeDTO)))
 
-        		.andReturn();
+				.andReturn();
 
-        // verify
-        int status = result.getResponse().getStatus();
-        assertEquals(HttpStatus.CREATED.value(), status, "CREATED");
+		// verify
+		int status = result.getResponse().getStatus();
+		assertEquals(HttpStatus.CREATED.value(), status, "CREATED");
 
-        // verify that service method was called once
-	    verify(recipeService,times(1)).save(any(Recipe.class));
+		// verify that service method was called once
+		verify(recipeService, times(1)).save(any(Recipe.class));
 
-        RecipeDTO recipeDTO1 = RecipeUtilTest.jsonToObject(result.getResponse().getContentAsString(), RecipeDTO.class);
-        assertNotNull(recipeDTO1);
-        assertEquals("kiwi pinnaple ice cream", recipeDTO1.getName());
+		RecipeDTO recipeDTO1 = RecipeUtilTest.jsonToObject(result.getResponse().getContentAsString(), RecipeDTO.class);
+		assertNotNull(recipeDTO1);
+		assertEquals("kiwi pinnaple ice cream", recipeDTO1.getName());
 
-    }
-    
-	/*
-	 * @Test public void testGetAllRecipes() throws Exception {
-	 * 
-	 * // prepare data and mock's behaviour List<RecipeDTO> recipeDTOList =
-	 * buildRecipeDtoList(); List<Recipe> recipeList = buildRecipeList();
-	 * when(recipeService.getAllRecipe()).thenReturn(recipeList);
-	 * //when(recipeUtil.convertToEntity(any(RecipeDTO.class))).thenReturn(recipe);
-	 * //when(recipeUtil.convertToDto(any(Recipe.class))).thenReturn(recipeDTO);
-	 * when(recipeList.stream().map(recipeUtil.convertToDto(any(Recipe.class))).
-	 * collect(Collectors.toList())).thenReturn(recipeDTOList);
-	 * 
-	 * // execute MvcResult result =
-	 * mockMvc.perform(MockMvcRequestBuilders.get(URL).contentType(MediaType.
-	 * APPLICATION_JSON)
-	 * .accept(MediaType.APPLICATION_JSON).content(RecipeUtilTest.objectToJson(
-	 * recipeDTOList)))
-	 * 
-	 * .andReturn();
-	 * 
-	 * // verify int status = result.getResponse().getStatus();
-	 * assertEquals(HttpStatus.CREATED.value(), status, "CREATED");
-	 * 
-	 * // verify that service method was called once
-	 * verify(recipeService,times(1)).save(any(Recipe.class));
-	 * 
-	 * RecipeDTO recipeDTO1 =
-	 * RecipeUtilTest.jsonToObject(result.getResponse().getContentAsString(),
-	 * RecipeDTO.class); assertNotNull(recipeDTO1);
-	 * assertEquals("kiwi pinnaple ice cream", recipeDTO1.getName());
-	 * 
-	 * }
-	 */
-    
-    @Test
-     void testUpdateRecipe() throws Exception {
-    	
-        
-     // prepare data and mock's behaviour
-        int recipeId=1;
-    	RecipeDTO recipeDTO  = buildRecipeDTO();
-		Recipe recipe  = buildRecipe();
-		when(recipeService.update(any(Recipe.class),any(Integer.class))).thenReturn(recipe);
+	}
+
+	@Test
+	 void testGetAllRecipes() throws Exception {
+
+		// prepare data and mock's behaviour
+		List<RecipeDTO> recipeDTOList = buildRecipeDtoList();
+		RecipeDTO recipeDTO = buildRecipeDTO();
+		List<Recipe> recipeList = buildRecipeList();
+		when(recipeService.getAllRecipe()).thenReturn(recipeList);
+	    when(recipeUtil.convertToDto(any(Recipe.class))).thenReturn(recipeDTO);
+		
+
+		// execute MvcResult result =
+	    MvcResult result=mockMvc.perform(MockMvcRequestBuilders.get(URL).contentType(MediaType.APPLICATION_JSON)
+				.accept(MediaType.APPLICATION_JSON).content(RecipeUtilTest.objectToJson(recipeDTOList)))
+
+				.andReturn();
+
+		// verify int status = result.getResponse().getStatus();
+		int status = result.getResponse().getStatus();
+		assertEquals(HttpStatus.OK.value(), status, "OK");
+
+		// verify that service method was called once
+		verify(recipeService, times(1)).getAllRecipe();
+
+		
+		// RecipeDTO recipeDTO1 = RecipeUtilTest.jsonToList(result.getResponse().getContentAsString(),recipeDTO1);
+		  
+		 
+
+	}
+
+	@Test
+	void testUpdateRecipe() throws Exception {
+
+		// prepare data and mock's behaviour
+		int recipeId = 1;
+		RecipeDTO recipeDTO = buildRecipeDTO();
+		Recipe recipe = buildRecipe();
+		when(recipeService.update(any(Recipe.class), any(Integer.class))).thenReturn(recipe);
 		when(recipeUtil.convertToEntity(any(RecipeDTO.class))).thenReturn(recipe);
 		when(recipeUtil.convertToDto(any(Recipe.class))).thenReturn(recipeDTO);
 
-        // execute
-        MvcResult result = mockMvc.perform(MockMvcRequestBuilders.put(URL+"/{recipeId}",recipeId).contentType(MediaType.APPLICATION_JSON)
-                .accept(MediaType.APPLICATION_JSON).content(RecipeUtilTest.objectToJson(recipeDTO)))
-        		.andReturn();
+		// execute
+		MvcResult result = mockMvc.perform(
+				MockMvcRequestBuilders.put(URL + "/{recipeId}", recipeId).contentType(MediaType.APPLICATION_JSON)
+						.accept(MediaType.APPLICATION_JSON).content(RecipeUtilTest.objectToJson(recipeDTO)))
+				.andReturn();
 
-        // verify
-        int status = result.getResponse().getStatus();
-        assertEquals(HttpStatus.OK.value(), status, "OK");
+		// verify
+		int status = result.getResponse().getStatus();
+		assertEquals(HttpStatus.OK.value(), status, "OK");
 
-        // verify that service method was called once
-	    verify(recipeService,times(1)).update(any(Recipe.class),any(Integer.class));
+		// verify that service method was called once
+		verify(recipeService, times(1)).update(any(Recipe.class), any(Integer.class));
 
-        RecipeDTO recipeDTO1 = RecipeUtilTest.jsonToObject(result.getResponse().getContentAsString(), RecipeDTO.class);
-        assertNotNull(recipeDTO1);
-        assertEquals("kiwi pinnaple ice cream", recipeDTO1.getName());
-    	
-    }
-    
-    @Test
-     void testGetRecipee() throws Exception {
-        
-     // prepare data and mock's behaviour
-        int recipeId=1;
-    	RecipeDTO recipeDTO  = buildRecipeDTO();
-		Recipe recipe  = buildRecipe();
+		RecipeDTO recipeDTO1 = RecipeUtilTest.jsonToObject(result.getResponse().getContentAsString(), RecipeDTO.class);
+		assertNotNull(recipeDTO1);
+		assertEquals("kiwi pinnaple ice cream", recipeDTO1.getName());
+
+	}
+
+	@Test
+	void testGetRecipee() throws Exception {
+
+		// prepare data and mock's behaviour
+		int recipeId = 1;
+		RecipeDTO recipeDTO = buildRecipeDTO();
+		Recipe recipe = buildRecipe();
 		when(recipeService.getRecipeById(any(Integer.class))).thenReturn(recipe);
 		when(recipeUtil.convertToDto(any(Recipe.class))).thenReturn(recipeDTO);
 
-        // execute
-        MvcResult result = mockMvc.perform(MockMvcRequestBuilders.get(URL+"/{recipeId}",recipeId).contentType(MediaType.APPLICATION_JSON)
-                .accept(MediaType.APPLICATION_JSON).content(RecipeUtilTest.objectToJson(recipeDTO)))
-        		.andReturn();
+		// execute
+		MvcResult result = mockMvc.perform(
+				MockMvcRequestBuilders.get(URL + "/{recipeId}", recipeId).contentType(MediaType.APPLICATION_JSON)
+						.accept(MediaType.APPLICATION_JSON).content(RecipeUtilTest.objectToJson(recipeDTO)))
+				.andReturn();
 
-        // verify
-        int status = result.getResponse().getStatus();
-        assertEquals(HttpStatus.OK.value(), status, "OK");
+		// verify
+		int status = result.getResponse().getStatus();
+		assertEquals(HttpStatus.OK.value(), status, "OK");
 
-        // verify that service method was called once
-	    verify(recipeService,times(1)).getRecipeById(any(Integer.class));
+		// verify that service method was called once
+		verify(recipeService, times(1)).getRecipeById(any(Integer.class));
 
-        RecipeDTO recipeDTO1 = RecipeUtilTest.jsonToObject(result.getResponse().getContentAsString(), RecipeDTO.class);
-        assertNotNull(recipeDTO1);
-        assertEquals("kiwi pinnaple ice cream", recipeDTO1.getName());
-    	
-    }
+		RecipeDTO recipeDTO1 = RecipeUtilTest.jsonToObject(result.getResponse().getContentAsString(), RecipeDTO.class);
+		assertNotNull(recipeDTO1);
+		assertEquals("kiwi pinnaple ice cream", recipeDTO1.getName());
 
-    @Test
-     void testDeleteRecipe() throws Exception {
-        
-     // prepare data and mock's behaviour
-        int recipeId=1;
-    	RecipeDTO recipeDTO  = buildRecipeDTO();
+	}
 
-        // execute
-        MvcResult result = mockMvc.perform(MockMvcRequestBuilders.delete(URL+"/{recipeId}",recipeId).contentType(MediaType.APPLICATION_JSON)
-                .accept(MediaType.APPLICATION_JSON).content(RecipeUtilTest.objectToJson(recipeDTO)))
-        		.andReturn();
+	@Test
+	void testDeleteRecipe() throws Exception {
 
-        // verify
-        int status = result.getResponse().getStatus();
-        assertEquals(HttpStatus.NO_CONTENT.value(), status, "No Content");
+		// prepare data and mock's behaviour
+		int recipeId = 1;
+		RecipeDTO recipeDTO = buildRecipeDTO();
 
-        // verify that service method was called once
-	    verify(recipeService,times(1)).delete(any(Integer.class));
-    	
-    }
-    
+		// execute
+		MvcResult result = mockMvc.perform(
+				MockMvcRequestBuilders.delete(URL + "/{recipeId}", recipeId).contentType(MediaType.APPLICATION_JSON)
+						.accept(MediaType.APPLICATION_JSON).content(RecipeUtilTest.objectToJson(recipeDTO)))
+				.andReturn();
+
+		// verify
+		int status = result.getResponse().getStatus();
+		assertEquals(HttpStatus.NO_CONTENT.value(), status, "No Content");
+
+		// verify that service method was called once
+		verify(recipeService, times(1)).delete(any(Integer.class));
+
+	}
+
 	private List<Recipe> buildRecipes() {
 		List<Recipe> recipes = new ArrayList<>();
 		Recipe recipe = new Recipe();
@@ -200,7 +201,7 @@ class RecipeControllerTest{
 		recipe.setName("kiwi pinnaple ice cream");
 		recipe.setType("veg");
 		recipe.setNumberOfServings(2);
-		//recipe.setRecipeDate(new Date());
+		// recipe.setRecipeDate(new Date());
 		List<Ingredients> ingredientsList = new ArrayList<>();
 		Ingredients ingredients = new Ingredients();
 		ingredients.setId(2);
@@ -211,6 +212,7 @@ class RecipeControllerTest{
 		recipes.add(recipe);
 		return recipes;
 	}
+
 	private List<RecipeDTO> buildRecipesDTO() {
 		List<RecipeDTO> recipeDtoList = new ArrayList<>();
 		RecipeDTO recipeDto = new RecipeDTO();
@@ -220,7 +222,7 @@ class RecipeControllerTest{
 		recipeDto.setName("kiwi pinnaple ice cream");
 		recipeDto.setType("veg");
 		recipeDto.setNumberOfServings(2);
-		//recipeDto.setRecipeDate(new Date());
+		// recipeDto.setRecipeDate(new Date());
 		List<IngredientsDTO> ingredientsDtoList = new ArrayList<>();
 		IngredientsDTO ingredientsDTO = new IngredientsDTO();
 		ingredientsDTO.setId(2);
@@ -231,7 +233,7 @@ class RecipeControllerTest{
 		recipeDtoList.add(recipeDto);
 		return recipeDtoList;
 	}
-	
+
 	private Recipe buildRecipe() {
 		Recipe recipe = new Recipe();
 		recipe.setDescription("fruit icecream");
@@ -240,7 +242,7 @@ class RecipeControllerTest{
 		recipe.setName("kiwi pinnaple ice cream");
 		recipe.setType("veg");
 		recipe.setNumberOfServings(2);
-		//recipe.setRecipeDate(new Date());
+		// recipe.setRecipeDate(new Date());
 		List<Ingredients> ingredientsList = new ArrayList<>();
 		Ingredients ingredients = new Ingredients();
 		ingredients.setId(2);
@@ -250,6 +252,7 @@ class RecipeControllerTest{
 		recipe.setIngredients(ingredientsList);
 		return recipe;
 	}
+
 	private RecipeDTO buildRecipeDTO() {
 		RecipeDTO recipeDto = new RecipeDTO();
 		recipeDto.setDescription("fruit icecream");
@@ -258,7 +261,7 @@ class RecipeControllerTest{
 		recipeDto.setName("kiwi pinnaple ice cream");
 		recipeDto.setType("veg");
 		recipeDto.setNumberOfServings(2);
-		//recipeDto.setRecipeDate(new Date());
+		// recipeDto.setRecipeDate(new Date());
 		List<IngredientsDTO> ingredientsDtoList = new ArrayList<>();
 		IngredientsDTO ingredientsDTO = new IngredientsDTO();
 		ingredientsDTO.setId(2);
@@ -268,7 +271,7 @@ class RecipeControllerTest{
 		recipeDto.setIngredientsDto(ingredientsDtoList);
 		return recipeDto;
 	}
-	
+
 	private List<Recipe> buildRecipeList() {
 		List<Recipe> recipeList = new ArrayList<>();
 		Recipe recipe = new Recipe();
@@ -278,7 +281,7 @@ class RecipeControllerTest{
 		recipe.setName("kiwi pinnaple ice cream");
 		recipe.setType("veg");
 		recipe.setNumberOfServings(2);
-		//recipe.setRecipeDate(new Date());
+		// recipe.setRecipeDate(new Date());
 		List<Ingredients> ingredientsList = new ArrayList<>();
 		Ingredients ingredients = new Ingredients();
 		ingredients.setId(2);
@@ -287,7 +290,7 @@ class RecipeControllerTest{
 		ingredientsList.add(ingredients);
 		recipe.setIngredients(ingredientsList);
 		recipeList.add(recipe);
-		
+
 		recipe = new Recipe();
 		recipe.setDescription("stir fried vegetables");
 		recipe.setId(4);
@@ -295,7 +298,7 @@ class RecipeControllerTest{
 		recipe.setName("Spring Roll");
 		recipe.setType("veg");
 		recipe.setNumberOfServings(3);
-		//recipe.setRecipeDate(new Date());
+		// recipe.setRecipeDate(new Date());
 		ingredientsList = new ArrayList<>();
 		ingredients = new Ingredients();
 		ingredients.setId(5);
@@ -304,10 +307,10 @@ class RecipeControllerTest{
 		ingredientsList.add(ingredients);
 		recipe.setIngredients(ingredientsList);
 		recipeList.add(recipe);
-		
+
 		return recipeList;
 	}
-	
+
 	private List<RecipeDTO> buildRecipeDtoList() {
 		List<RecipeDTO> recipeDTOList = new ArrayList<>();
 		RecipeDTO recipeDto = new RecipeDTO();
@@ -317,7 +320,7 @@ class RecipeControllerTest{
 		recipeDto.setName("kiwi pinnaple ice cream");
 		recipeDto.setType("veg");
 		recipeDto.setNumberOfServings(2);
-		//recipe.setRecipeDate(new Date());
+		// recipe.setRecipeDate(new Date());
 		List<IngredientsDTO> ingredientsDtoList = new ArrayList<>();
 		IngredientsDTO ingredientsDto = new IngredientsDTO();
 		ingredientsDto.setId(2);
@@ -326,7 +329,7 @@ class RecipeControllerTest{
 		ingredientsDtoList.add(ingredientsDto);
 		recipeDto.setIngredientsDto(ingredientsDtoList);
 		recipeDTOList.add(recipeDto);
-		
+
 		recipeDto = new RecipeDTO();
 		recipeDto.setDescription("stir fried vegetables");
 		recipeDto.setId(4);
@@ -334,7 +337,7 @@ class RecipeControllerTest{
 		recipeDto.setName("Spring Roll");
 		recipeDto.setType("veg");
 		recipeDto.setNumberOfServings(3);
-		//recipe.setRecipeDate(new Date());
+		// recipe.setRecipeDate(new Date());
 		ingredientsDtoList = new ArrayList<>();
 		ingredientsDto = new IngredientsDTO();
 		ingredientsDto.setId(5);
@@ -343,7 +346,7 @@ class RecipeControllerTest{
 		ingredientsDtoList.add(ingredientsDto);
 		recipeDto.setIngredientsDto(ingredientsDtoList);
 		recipeDTOList.add(recipeDto);
-		
+
 		return recipeDTOList;
 	}
 
