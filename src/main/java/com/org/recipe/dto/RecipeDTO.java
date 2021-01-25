@@ -3,7 +3,8 @@ package com.org.recipe.dto;
 import java.io.Serializable;
 import java.util.List;
 
-import com.sun.istack.NotNull;
+import javax.validation.constraints.NotNull;
+
 
 /**
  * This class is having recipe properties.
@@ -14,12 +15,12 @@ public class RecipeDTO  implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 	private int id;
-	@NotNull
+	@NotNull(message="Please provide some description to your recipe")
 	private String description;
 	private String imagePath;
-	@NotNull
+	@NotNull(message="Please enter the recipe name")
 	private String name;
-	@NotNull
+	@NotNull(message="please choose your recipe type")
 	private String type;
 	private int numberOfServings;
 	private  String recipeDate;

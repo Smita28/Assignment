@@ -1,21 +1,29 @@
 package com.org.recipe.controller;
 
 import java.lang.invoke.MethodHandles;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
+
+import javax.validation.Valid;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.org.recipe.dto.RecipeDTO;
@@ -31,6 +39,7 @@ import com.org.recipe.util.RecipeUtil;
 
 @RestController
 @RequestMapping("/")
+@Validated
 public class RecipeController {
 
 	@Autowired
@@ -63,7 +72,7 @@ public class RecipeController {
 	 * @return RecipeDTO
 	 */
 	@GetMapping("/recipes/{recipeId}")
-	public ResponseEntity<RecipeDTO> getRecipe(@PathVariable("recipeId") int recipeId) {
+	public ResponseEntity<RecipeDTO> getRecipe(@Valid @PathVariable("recipeId") int recipeId) {
 		logger.info("Inside getRecipe method ");
 		return new ResponseEntity<>(recipeUtil.convertToDto(recipeService.getRecipeById(recipeId)),HttpStatus.OK);
 	} 
@@ -75,7 +84,7 @@ public class RecipeController {
 	 * @return ResponseEntity<Object>
 	 */
 	@PostMapping("/recipes")
-	public ResponseEntity<RecipeDTO> createRecipe(@RequestBody RecipeDTO recipeDto) {
+	public ResponseEntity<RecipeDTO> createRecipe(@Valid @RequestBody RecipeDTO recipeDto) {
 		ResponseEntity<RecipeDTO> response = null;
 		logger.info("Inside saverecipe method ");
 		Recipe recipe = recipeService.save(recipeUtil.convertToEntity(recipeDto));
@@ -128,7 +137,21 @@ public class RecipeController {
 		return new ResponseEntity<>(recipesDto, HttpStatus.OK);
 
 	}
-	 
+    /**
+     * This method handles validation error response.
+     * @param MethodArgumentNotValidException ex
+     * @return Map<String, String>
+     */
+	@ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public Map<String, String> handleMethodArgumentNotValid(MethodArgumentNotValidException ex) {
+        Map<String, String> errors = new HashMap<>();
+     
+        ex.getBindingResult().getFieldErrors().forEach(error -> 
+            errors.put(error.getField(), error.getDefaultMessage()));
+         
+        return errors;
+    }
 }
 	
 

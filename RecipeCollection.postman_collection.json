@@ -641,18 +641,69 @@
 						}
 					]
 				},
-				"method": "DELETE",
+				"method": "POST",
 				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "\t{\r\n\t\t\"imagePath\": \"https://s-media-cache-ak0.pinimg.com/originals/63/6d/8d/636d8d6cfbf1862e5ad5f89571c55430.jpg\",\r\n\t\t\"numberOfServings\": 3,\r\n\t\t\t\"ingredientsDto\": [\r\n\t\t\t\t{\r\n\t\t\t\t\t\"quantity\": \"6 cubes\",\r\n\t\t\t\t\t\"name\": \"Paneer\"\r\n\t\t\t\t},\r\n\t\t\t\t{\r\n\t\t\t\t\t\"quantity\": \"250gm\",\r\n\t\t\t\t\t\"name\": \"spinach leave\"\r\n\t\t\t\t},\r\n\t\t\t\t{\r\n\t\t\t\t\t\"quantity\": \"1 cup\",\r\n\t\t\t\t\t\"name\": \"sliced onion\"\r\n\t\t\t\t}\r\n\t\t\t]\r\n\t\t\t\r\n\t\t}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
 				"url": {
-					"raw": "http://localhost:8090/recipes/8",
+					"raw": "http://localhost:8090/recipes",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
 					"port": "8090",
 					"path": [
-						"recipes",
-						"8"
+						"recipes"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "create recipe valodation fail",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "password",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "admin",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "\t{\r\n\t\t\"imagePath\": \"https://s-media-cache-ak0.pinimg.com/originals/63/6d/8d/636d8d6cfbf1862e5ad5f89571c55430.jpg\",\r\n\t\t\"numberOfServings\": 3,\r\n\t\t\t\"ingredientsDto\": [\r\n\t\t\t\t{\r\n\t\t\t\t\t\"quantity\": \"6 cubes\",\r\n\t\t\t\t\t\"name\": \"Paneer\"\r\n\t\t\t\t},\r\n\t\t\t\t{\r\n\t\t\t\t\t\"quantity\": \"250gm\",\r\n\t\t\t\t\t\"name\": \"spinach leave\"\r\n\t\t\t\t},\r\n\t\t\t\t{\r\n\t\t\t\t\t\"quantity\": \"1 cup\",\r\n\t\t\t\t\t\"name\": \"sliced onion\"\r\n\t\t\t\t}\r\n\t\t\t]\r\n\t\t\t\r\n\t\t}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8090/recipes",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8090",
+					"path": [
+						"recipes"
 					]
 				}
 			},

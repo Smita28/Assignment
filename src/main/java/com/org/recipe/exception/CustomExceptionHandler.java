@@ -86,6 +86,7 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler
         return new ResponseEntity<>(error, HttpStatus.INTERNAL_SERVER_ERROR);
     }
  
+
   
 }
 

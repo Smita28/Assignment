@@ -23,7 +23,7 @@ public class SwaggerConfig {
 
 
 	/**
-	 * This method is for swagger config
+	 * This method is for swagger config by Docket
 	 * 
 	 * @return Docket
 	 */

@@ -52,9 +52,6 @@ public class RecipeServiceImpl implements RecipeService {
 	public Recipe save(Recipe recipe) {
 		
 		String recipeName = recipe.getName();
-		if(recipe.getDescription().isEmpty() || recipe.getName().isEmpty()|| recipe.getType().isEmpty()) {
-			throw new InvalidInputException("Recipe Description, Name and type should not be empty .");
-		}
 		if(null != recipeRepository.findByName(recipeName.strip())) {
 			throw new RecipeAlreadyExistsException(recipeName);
 		}
