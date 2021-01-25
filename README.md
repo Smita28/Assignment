@@ -1,6 +1,6 @@
 # Recipe Management System
 
-.Guide
+##Guide
 
   This is a simple spring boot rest  application to generate recipes by using ingridients.
   Its having a in memory database for storing generated recipes.Basically its having features 
