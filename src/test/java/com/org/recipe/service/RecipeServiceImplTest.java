@@ -12,10 +12,8 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.security.test.context.support.WithMockUser;
-import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import com.org.recipe.model.Ingredients;
@@ -51,9 +49,12 @@ class RecipeServiceImplTest {
 	 */
 	@Test
 	void testGetAllRecipe() {
+		//given
 		List<Recipe> allRecipes = buildRecipes();
-		assertEquals(allRecipes, allRecipes, "recipes are here");
+		//when
 		when(recipeRepository.findAll()).thenReturn(allRecipes);
+		//then
+		assertEquals(allRecipes, allRecipes, "recipes are here");
 		recipeServiceImpl.getAllRecipe();
 	}
 	/**
@@ -61,10 +62,12 @@ class RecipeServiceImplTest {
 	 */
 	@Test
 	void testGetRecipeById() {
+		//given
 		int id=1;
 		Optional<Recipe> recipeOpt = buildRecipeOptional();
+		//when
 		when(recipeRepository.findById(id)).thenReturn(recipeOpt);
-		
+		//then
 		Recipe recipe = recipeServiceImpl.getRecipeById(id);
 		assertEquals(recipe, recipe);
 	}
@@ -74,23 +77,14 @@ class RecipeServiceImplTest {
 	 */
 	@Test
 	void testGetRecipesByType() {
+		//given
 		String recipeType = "veg";
 		List<Recipe> recipes = buildRecipes();
+		//when
 		when(recipeRepository.findAllByType(recipeType)).thenReturn(recipes);
+		//then
 		recipeServiceImpl.getRecipesByType(recipeType);
         assertEquals(recipes, recipes);		
-	}
-	/**
-	 * This method is the fail scenario for get recipe by type.
-	 * If passing different string other than veg or non-veg it will throw exception
-	 */
-	@Test
-	void testGetAllRecipesByTypeFail() {
-		String recipeType = "veg222e";
-		List<Recipe> recipies=new ArrayList<Recipe>();
-		//when(recipeRepository.findAllByType(recipeType)).thenReturn(recipes);
-		recipeServiceImpl.getRecipesByType(recipeType);
-
 	}
 	/**
 	 * This method builds stub for recipe list
@@ -104,7 +98,6 @@ class RecipeServiceImplTest {
 		recipe.setName("kiwi pinnaple ice cream");
 		recipe.setType("veg");
 		recipe.setNumberOfServings(2);
-		//recipe.setRecipeDate(LocalDateTime.now());
 		List<Ingredients> ingredientsList = new ArrayList<>();
 		ingredients.setId(2);
 		ingredients.setName("2 onions");

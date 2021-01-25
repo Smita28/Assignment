@@ -25,7 +25,7 @@ public class RecipeUtil {
 	 * @param recipe
 	 * @return RecipeDTO
 	 */
-	public RecipeDTO convertToDto(Recipe recipe) {
+	public  RecipeDTO convertToDto(Recipe recipe) {
 		RecipeDTO recipeDto = new RecipeDTO();
 		List<IngredientsDTO> ingredientsDTO = new ArrayList<>();
 		if (null != recipe) {

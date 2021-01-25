@@ -44,7 +44,7 @@ public class RecipeServiceImpl implements RecipeService {
 			      .orElseThrow(() -> new RecipeNotFoundException(id));
 	}
 	/**
-     *This method is to save recipe	 * 
+     *This method is to save recipe	 
 	 * @return  Recipe
 	 * @param recipe
 	 */
@@ -62,7 +62,7 @@ public class RecipeServiceImpl implements RecipeService {
 	}
 
 	/**
-     *This method is to delete recipe	 * 
+     *This method is to delete recipe	
 	 * @return  
 	 * @param id
 	 */
@@ -74,13 +74,12 @@ public class RecipeServiceImpl implements RecipeService {
 		recipeRepository.deleteById(id);
 	}
 	/**
-     *This method is to update recipe	 * 
+     *This method is to update recipe	 
 	 * @return  Recipe
 	 * @param recipe,recipeId
 	 */
 	@Override
 	public Recipe update(Recipe recipe, int recipeId) {
-		String recipeName = recipe.getName();
 		recipe.setId(recipeId);
 		if(!recipeRepository.findById(recipeId).isPresent()) {
 			throw new RecipeNotFoundException(recipeId);
@@ -89,7 +88,7 @@ public class RecipeServiceImpl implements RecipeService {
 	}
 
 	/**
-     *This method is to get recipe by type	 * 
+     *This method is to get recipe by type(veg or non-veg)	  
 	 * @return  List<Recipe>
 	 * @param recipeType
 	 */

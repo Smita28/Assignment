@@ -24,7 +24,7 @@ import com.org.recipe.service.RecipeService;
 import com.org.recipe.util.RecipeUtil;
 
 /**
- * This class produces recipe rest services
+ * This class implements rest full services for recipe service.
  * 
  * @author smita
  */
